@@ -1,4 +1,4 @@
-/* Copyright (c) Cloud Software Group, Inc. 
+﻿/* Copyright (c) Cloud Software Group, Inc. 
  * 
  * Redistribution and use in source and binary forms, 
  * with or without modification, are permitted provided 
@@ -153,7 +153,9 @@ namespace XenAdmin
             Icon = Properties.Resources.AppIcon;
 
             //CA-270999: Add registration to RestartManager
-            RegisterApplicationRestart(null, 0);
+            if (Type.GetType("Mono.Runtime") == null) {
+                RegisterApplicationRestart(null, 0);
+            }
 
             #region Add Tab pages
 
