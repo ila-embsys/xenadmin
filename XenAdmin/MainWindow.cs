@@ -1,4 +1,4 @@
-﻿/* Copyright (c) Cloud Software Group, Inc. 
+/* Copyright (c) Cloud Software Group, Inc. 
  * 
  * Redistribution and use in source and binary forms, 
  * with or without modification, are permitted provided 
@@ -187,7 +187,13 @@ namespace XenAdmin
             AddTabContents(CvmConsolePanel, TabPageCvmConsole);
             AddTabContents(NetworkPage, TabPageNetwork);
             AddTabContents(HAPage, TabPageHA);
-            AddTabContents(HomePage, TabPageHome);
+            if (Type.GetType("Mono.Runtime") == null) {
+                AddTabContents(HomePage, TabPageHome);
+            }
+            else
+            {
+                // TODO: Cause of connection lost
+            }
             AddTabContents(WlbPage, TabPageWLB);
             AddTabContents(PhysicalStoragePage, TabPagePhysicalStorage);
             AddTabContents(AdPage, TabPageAD);
