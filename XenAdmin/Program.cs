@@ -1,4 +1,4 @@
-﻿/* Copyright (c) Cloud Software Group, Inc. 
+/* Copyright (c) Cloud Software Group, Inc. 
  * 
  * Redistribution and use in source and binary forms, 
  * with or without modification, are permitted provided 
@@ -251,8 +251,11 @@ namespace XenAdmin
             log.InfoFormat("Time since process started: {0}", (DateTime.Now - Process.GetCurrentProcess().StartTime).ToString());
 
             log.InfoFormat("Handles open: {0}", p.HandleCount.ToString());
-            log.InfoFormat("USER handles open: {0}", Win32.GetGuiResourcesUserCount(p.Handle));
-            log.InfoFormat("GDI handles open: {0}", Win32.GetGuiResourcesGDICount(p.Handle));
+            if (System.Type.GetType("Mono.Runtime") == null)
+            {
+                log.InfoFormat("USER handles open: {0}", Win32.GetGuiResourcesUserCount(p.Handle));
+                log.InfoFormat("GDI handles open: {0}", Win32.GetGuiResourcesGDICount(p.Handle));
+            }
             log.InfoFormat("Thread count: {0}", p.Threads.Count);
 
             log.InfoFormat("Virtual memory size: {0} B({1})", p.VirtualMemorySize64, Util.MemorySizeStringSuitableUnits(p.VirtualMemorySize64, false));
