@@ -1,4 +1,4 @@
-/* Copyright (c) Cloud Software Group, Inc. 
+﻿/* Copyright (c) Cloud Software Group, Inc. 
  * 
  * Redistribution and use in source and binary forms, 
  * with or without modification, are permitted provided 
@@ -153,10 +153,16 @@ namespace XenAdmin
                 Environment.UserName,
                 Assembly.GetExecutingAssembly().Location.Replace('\\', '-'));
 
-            if (NamedPipes.Pipe.ExistsPipe(_pipePath))
-            {
-                NamedPipes.Pipe.SendMessageToPipe(_pipePath, string.Join(" ", args));
-                return;
+            try {
+                if (NamedPipes.Pipe.ExistsPipe(_pipePath))
+                {
+                    NamedPipes.Pipe.SendMessageToPipe(_pipePath, string.Join(" ", args));
+                    return;
+                }
+            }
+            catch (System.IO.IOException) {
+                // For example, Mono throws the exception on calling ExistsPipe
+                // Since if the pipe doesn't exist the code does nothing too.
             }
 
             log.Info("Application started");
