@@ -391,7 +391,13 @@ namespace XenAdmin
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            Clip.RegisterClipboardViewer();
+            if (Type.GetType("Mono.Runtime") == null) {
+                Clip.RegisterClipboardViewer();
+            }
+            else
+            {
+                // TODO: Clipboard doesn't work under Mono
+            }
         }
 
         protected override void WndProc(ref System.Windows.Forms.Message e)
