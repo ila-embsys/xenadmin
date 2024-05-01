@@ -1,4 +1,4 @@
-/* Copyright (c) Cloud Software Group, Inc. 
+﻿/* Copyright (c) Cloud Software Group, Inc. 
  * 
  * Redistribution and use in source and binary forms, 
  * with or without modification, are permitted provided 
@@ -872,7 +872,15 @@ namespace XenAdmin.ConsoleView
 
             if (_sendScanCodes)
             {
-                InterceptKeys.grabKeys(KeyScan, false);
+                if (Type.GetType("Mono.Runtime") == null)
+                {
+                    InterceptKeys.grabKeys(KeyScan, false);
+                }
+                else
+                {
+                    // TODO: The code in `XenAdmin/VNC/KeyMap.cs`
+                    // must be crossplatform to enable this feature
+                }
             }
 
             if (_updateClipboardOnFocus)
@@ -886,7 +894,15 @@ namespace XenAdmin.ConsoleView
 
             EnableMenuShortcuts();
 
-            InterceptKeys.releaseKeys();
+            if (Type.GetType("Mono.Runtime") == null)
+            {
+                InterceptKeys.releaseKeys();
+            }
+            else
+            {
+                // TODO: The code in `XenAdmin/VNC/KeyMap.cs`
+                // must be crossplatform to enable this feature
+            }
 
             _cursorOver = false;
 
@@ -1265,11 +1281,27 @@ namespace XenAdmin.ConsoleView
 
                 if (!value)
                 {
-                    InterceptKeys.releaseKeys();
+                    if (Type.GetType("Mono.Runtime") == null)
+                    {
+                        InterceptKeys.releaseKeys();
+                    }
+                    else
+                    {
+                        // TODO: The code in `XenAdmin/VNC/KeyMap.cs`
+                        // must be crossplatform to enable this feature
+                    }
                 }
                 else if (Focused)
                 {
-                    InterceptKeys.grabKeys(KeyScan, false);
+                    if (Type.GetType("Mono.Runtime") == null)
+                    {
+                        InterceptKeys.grabKeys(KeyScan, false);
+                    }
+                    else
+                    {
+                        // TODO: The code in `XenAdmin/VNC/KeyMap.cs`
+                        // must be crossplatform to enable this feature
+                    }
                 }
 
                 _sendScanCodes = value;
