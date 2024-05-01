@@ -1,4 +1,4 @@
-﻿/* Copyright (c) Cloud Software Group, Inc. 
+/* Copyright (c) Cloud Software Group, Inc. 
  * 
  * Redistribution and use in source and binary forms, 
  * with or without modification, are permitted provided 
@@ -438,8 +438,14 @@ namespace XenAdmin.ConsoleView
                     hbmColor = bitmap.GetHbitmap()
                 };
 
-                _handle = CreateIconIndirect(ref iconInfo);
-                Cursor = new Cursor(_handle);
+                if (Type.GetType("Mono.Runtime") == null){
+                    _handle = CreateIconIndirect(ref iconInfo);
+                    Cursor = new Cursor(_handle);
+                }
+                else
+                {
+                    // Doesn't work under Mono
+                }
             }
 
             ~CustomCursor()
