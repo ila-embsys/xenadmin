@@ -200,7 +200,10 @@ namespace XenAdmin
         /// </summary>
         private static void ConnectPipe()
         {
-            _pipe = new NamedPipes.Pipe(_pipePath);
+            if (System.Type.GetType("Mono.Runtime") == null)
+            {
+                _pipe = new NamedPipes.Pipe(_pipePath);
+            }
 
             if (_pipe != null)
             {
